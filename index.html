@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIM Demo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .dim-container {
+            margin: 40px auto;
+            width: 860px;
+            max-width: 80%;
+            border: 10px solid #fc0;
+        }
+    </style>
+    <script src="dim.js"></script>
+    <script>
+        function run() {
+            var dim = new DIM('dim-container', {
+                background: 'background.png',
+                mask: 'mask-image.png',
+                padding: 30,
+                angle: 15,
+            });
+            dim.preview({
+                start: 0,
+                end: 50,
+                u_turn: true,
+            }, 1000);
+        }
+    </script>
+</head>
+
+<body onload="run()" onresize="run()">
+    <div class="dim-container" id="dim-container"></div>
+</body>
+</html>
