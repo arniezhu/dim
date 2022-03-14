@@ -12,7 +12,7 @@ function DIM (elemId, options) {
     this.code = '';
     this.range = {};
 
-    // Initial parameters
+    // initial parameters
     this.options = options;
     this.options.direction = options.direction || 'right';
     this.options.padding = parseFloat(options.padding) || 0;
@@ -58,7 +58,7 @@ function DIM (elemId, options) {
 }
 
 /**
- *  Render an element width transform-style
+ *  Render an element with transform-style
  */
 DIM.prototype.render = function (elem, left, top) {	
     if (! elem) return;
@@ -96,7 +96,7 @@ DIM.prototype.init = function() {
 
     this.container.appendChild(box);
 
-    // Background
+    // background
     var image = new Image(),
         background = document.createElement('div'),
         bg_width = this.options.width-this.options.padding*2;
@@ -188,7 +188,7 @@ DIM.prototype.setRange = function() {
 DIM.prototype.createMask = function() {
     var parent_elem = document.getElementById('dim-inner-'+this.code);
 
-    // Mask
+    // mask
     var mask = document.createElement('div'),
         mask_width = this.options.width - this.options.padding*2,
         mask_height = this.options.height - this.options.padding*2;
@@ -215,7 +215,7 @@ DIM.prototype.createController = function() {
     var parent_elem = document.getElementById('dim-inner-'+this.code),
         is_hor = this.range.is_horizontal;
 
-    // Controller box
+    // controller box
     var box = document.createElement('div');
     box.className = 'dim-controller-box';
     box.setAttribute('id', 'dim-controller-box-'+this.code);
@@ -225,10 +225,10 @@ DIM.prototype.createController = function() {
     box.setAttribute('style', 'position: absolute; left:'+left+'; top:'+top );
     parent_elem.appendChild(box);
 
-    // Shadow
+    // shadow
     this.generateShadow();
 
-    // Controller
+    // controller
     var controller = document.createElement('div');
     controller.className = 'dim-controller';
     controller.setAttribute('id', 'dim-controller-'+this.code);
@@ -274,7 +274,7 @@ DIM.prototype.generateShadow = function () {
     shadow.setAttribute('style', 'position: absolute; left: 50%; top: 50%');
     shadow.style.opacity = this.options.shadow.opacity;
 
-    // Shadow's style
+    // shadow's style
     if (direction==='right' || direction==='left') {
         shadow.style.width = this.options.shadow.size +'px';
         shadow.style.height = this.options.height*10 +'px';
@@ -315,7 +315,7 @@ DIM.prototype.generateIcon = function () {
     var box = document.getElementById('dim-controller-'+this.code),
         svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 
-    // Circle
+    // circle
     var circ = document.createElementNS('http://www.w3.org/2000/svg','circle');
 
     circ.setAttribute('cx', 16);
@@ -323,14 +323,14 @@ DIM.prototype.generateIcon = function () {
     circ.setAttribute('r', 16);
     circ.setAttribute('fill', this.options.controller.color);
         
-    // Left arrow
+    // left arrow
     var larr = document.createElementNS('http://www.w3.org/2000/svg','polygon'),
         larr_points = '14,12 13,11 8,16 13,21 14,20 10,16';
 
     larr.setAttribute('points', larr_points);
     larr.setAttribute('fill', '#333');
 
-    // Right arrow
+    // right arrow
     var rarr = document.createElementNS('http://www.w3.org/2000/svg','polygon'),
         rarr_points = '18,12 19,11 24,16 19,21 18,20 22,16';
 

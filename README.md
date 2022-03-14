@@ -2,6 +2,7 @@
 
 DIM is a simple script for creating draggable image mask on the webpage.
 
+![Preview](./preview.jpg)
 
 ## How to use
 

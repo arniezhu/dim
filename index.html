@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DIM Demo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css">
     <style>
         body {
             margin: 0;
@@ -14,6 +15,9 @@
             width: 860px;
             max-width: 80%;
             border: 10px solid #fc0;
+        }
+        .github-fork-ribbon:before {
+            background-color: #fc0;
         }
     </style>
     <script src="dim.js"></script>
@@ -36,5 +40,6 @@
 
 <body onload="run()" onresize="run()">
     <div class="dim-container" id="dim-container"></div>
+    <a class="github-fork-ribbon" href="https://github.com/arniezhu/dim" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
 </body>
 </html>
