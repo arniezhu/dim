@@ -24,6 +24,7 @@ var dim = new DIM(
             size: 64,                   // Assuming 64 if not provided
             color: '#ffcc00',           // Assuming '#ffcc00' if not provided
             opacity: 0.5,               // Assuming 0.5 if not provided
+            style: 'light',             // Style:'light','dark'; Default:'light'
         },
         controller: {
             width: 48,                  // Assuming 48 if not provided

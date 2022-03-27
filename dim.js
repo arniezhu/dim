@@ -1,7 +1,7 @@
 /*! 
  * DIM - Draggable Image Mask
  * @link https://github.com/arniezhu/dim
- * @version 1.0
+ * @version 1.0.1
  * @copyright (c) 2022-present arnie.info All Rights Reserved. 
  */
 
@@ -21,15 +21,16 @@ function DIM (elemId, options) {
     // shadow
     var shadow = options.shadow || {};
     this.options.shadow = shadow;
-    this.options.shadow.size = shadow.size || 64;
+    this.options.shadow.size = parseFloat(shadow.size) || 64;
+    this.options.shadow.opacity = parseFloat(shadow.opacity) || 0.5;
     this.options.shadow.color = shadow.color || '#ffcc00';
-    this.options.shadow.opacity = shadow.opacity || 0.5;
+    this.options.shadow.style = shadow.style || 'light';
 
     // controller 
     var controller = options.controller || {};
     this.options.controller = controller;
-    this.options.controller.width = controller.width || 48;
-    this.options.controller.height = controller.height || 48;
+    this.options.controller.width = parseFloat(controller.width) || 48;
+    this.options.controller.height = parseFloat(controller.height) || 48;
     this.options.controller.color = controller.color || '#ffcc00';
 
 	/* Browser vendor prefix */
@@ -118,15 +119,20 @@ DIM.prototype.init = function() {
         that.createController();
         that.showEffect(0,0);
         that.registerEvents();
-        typeof that.callback === 'function' && that.callback();
-        that.is_loaded = true;
+
+        var mask = new Image();
+        mask.src = that.options.mask;
+        mask.onload = function(){
+            typeof that.callback === 'function' && that.callback();
+            that.is_loaded = true;
+        }
     };
 
     if (this.options.height) {
         var bg_height = this.options.height - this.options.padding*2;
         background.style.height = bg_height+'px';
         box.style.height = this.options.height +'px';
-        initialize();
+        image.onload = initialize;
     } else {
         image.onload = function(){
             var ratio =  bg_width / this.width,
@@ -266,9 +272,10 @@ DIM.prototype.createController = function() {
 DIM.prototype.generateShadow = function () {
     var box = document.getElementById('dim-controller-box-'+this.code);
         shadow = document.createElement('div'),
-        color = this.options.shadow.color,
-        transparent = 'rgba(255,255,255,0)',
-        direction = this.options.direction;
+        direction = this.options.direction,
+        color1 = this.options.shadow.color,
+        color2 = this.options.shadow.style!='dark' 
+                 ? 'rgba(255,255,255,0)' : 'rgba(0,0,0,0)';
 
     shadow.className = 'dim-shadow';
     shadow.setAttribute('style', 'position: absolute; left: 50%; top: 50%');
@@ -281,11 +288,11 @@ DIM.prototype.generateShadow = function () {
         shadow.style.marginTop = -this.options.height*5 +'px';
         if (direction === 'right') {
             var transform_origin = 'right center',
-                background = 'linear-gradient(90deg,transparent,'+color+')';
+                background = 'linear-gradient(90deg,'+color2+','+color1+')';
             shadow.style.marginLeft = - this.options.shadow.size +'px';
         } else {    
             var transform_origin = 'left center',
-                background = 'linear-gradient(90deg,'+color+',transparent)';
+                background = 'linear-gradient(90deg,'+color1+','+color2+')';
         }
     } else {
         shadow.style.width = this.options.width*10 +'px';
@@ -293,11 +300,11 @@ DIM.prototype.generateShadow = function () {
         shadow.style.marginLeft = -this.options.width*5 +'px';
         if (direction !== 'up') {
             var transform_origin = 'center bottom',
-                background = 'linear-gradient(0deg,'+color+',transparent)';
+                background = 'linear-gradient(0deg,'+color1+','+color2+')';
             shadow.style.marginTop = - this.options.shadow.size +'px';
         } else {
             var transform_origin = 'center top',
-                background = 'linear-gradient(0deg,transparent,'+color+')';
+                background = 'linear-gradient(0deg,'+color2+','+color1+')';
         }
     }
     shadow.style[this.vendor+'Transform'] = 'rotate('+this.options.angle+'deg)';
